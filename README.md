@@ -38,7 +38,7 @@ Test                F       p
 One-way ANOVA  397.30  0.0000
 ```
 
-![Image for qv_groups](docs/img/README-01-qv_groups-F.png)
+![](docs/img/README-01-qv_groups-F.png)
 
 When there are only 2 groups, t-tests will be performed automatically.
 
@@ -54,7 +54,7 @@ Equal var. assumed      0.00  1.0000
 Equal var. not assumed  0.00  1.0000
 ```
 
-![Image for qv_groups](docs/img/README-01-qv_groups-t.png)
+![](docs/img/README-01-qv_groups-t.png)
 
 ### `qv_scatter`
 
@@ -72,7 +72,7 @@ Pearson's r   -0.2286  0.0000
 Spearman's r  -0.2139  0.0001
 ```
 
-![Image for qv_scatter](docs/img/README-02-qv_scatter.png)
+![](docs/img/README-02-qv_scatter.png)
 
 ### `qv_2cat`
 
@@ -89,7 +89,7 @@ Test              Test statistic      Value    df       p
 Chi-squared test  Chi-squared        299.55     4  0.0000
 ```
 
-![Image for qv_2cat](docs/img/README-03-qv_2cat.png)
+![](docs/img/README-03-qv_2cat.png)
 
 ### `qv_count`
 
@@ -108,7 +108,7 @@ Chinstrap       68
 NA               0
 ```
 
-![Image for qv_count](docs/img/README-04-qv_count.png)
+![](docs/img/README-04-qv_count.png)
 
 ### `qv_dist`
 
@@ -129,7 +129,7 @@ Sample size    333.00
 Skewness         0.05
 ```
 
-![Image for qv_dist](docs/img/README-05-qv_dist.png)
+![](docs/img/README-05-qv_dist.png)
 
 ## Contributing
 
