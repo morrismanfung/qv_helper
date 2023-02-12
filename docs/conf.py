@@ -6,7 +6,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u"rv_helper"
+project = u"qv_helper"
 copyright = u"2023, Morris Chan"
 author = u"Morris Chan"
 
