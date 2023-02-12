@@ -134,9 +134,45 @@ def qv_2cat(groupx, groupy, data, title_heatmap=None, title_bar=None, xlabel=Non
             table = [['Chi-squared test', 'Chi-squared', chi, df, p]]
             print(tabulate(table, headers=['Test', 'Test statistic', 'Value', 'df', 'p'], floatfmt=('', '', '.2f', '', '.4f')))
 
-def qv_count():
-    pass
+def qv_count(value, data, title=None, label=None, stat=True):
+    if title == None:
+        title = f'Distribution of {value}'
+    if label == None:
+        label = value
 
-def qv_dist():
-    pass
+    plt.figure(figsize=(5,4))
+    sns.countplot(x=value, data=data).set(
+        title=title, xlabel=label, ylabel='Count'
+    )
+
+    if data[value].isnull().any():
+            print('Null values are dropped in the chart.')
+    
+    counts = data[value].value_counts()
+    counts = np.array( [counts.index, counts]).T
+    nas = [['NA', data[value].isna().sum()]]
+    print( tabulate( np.concatenate((counts, nas)), headers=['Group', 'Count']))
+
+def qv_dist(value, data, title=None, label=None, kde=True, bins='auto', hue=None, stat=True):
+    if title == None:
+        title = f'Distribution of {value}'
+    if label == None:
+        label = value
+
+    plt.figure(figsize=(5,4))
+    sns.histplot(x=value, data=data, kde=kde, bins=bins, hue=hue).set(
+        title=title, xlabel=label, ylabel='Count'
+    )
+
+    if data[value].isnull().any():
+        data = data.dropna()
+        print('Null values are dropped in the chart and statistics.')
+    
+    mean = np.mean(data[value])
+    variance = np.var(data[value])
+    n = (~data[value].isna()).sum()
+    na = data[value].isna().sum()
+    skewness = stats.skew(data[value])
+    table = [['Mean', mean], ['Variance', variance], ['Sample size', n], ['# of NAs', na], ['Skewness', skewness]]
+    print( tabulate(table, headers=['Statistics', 'Value'], floatfmt='.2f'))
 
