@@ -1,10 +1,19 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 from tabulate import tabulate
 
-def qv_groups(value, group, data, title, xlabel, ylabel, stat):
+def qv_groups(value, group, data, title=None, xlabel=None, ylabel=None, stat=True):
+    if title == None:
+        title = f'{value} vs {group}'
+    if xlabel == None:
+        xlabel = value
+    if ylabel == None:
+        ylabel = group
+
+
     fix, axes = plt.subplots(1, 2, figsize=(10, 4), constrained_layout=True)
     sns.histplot(x=value, data=data, ax=axes[0]).set(
         title=title, xlabel=xlabel, ylabel='Count'
@@ -47,8 +56,27 @@ def qv_groups(value, group, data, title, xlabel, ylabel, stat):
                 table = [['One-way ANOVA', F, p]]
                 print(tabulate(table, headers=['Test', 'F', 'p'], floatfmt=('', '.2f', '.4f')))
 
-def qv_scatter():
-    pass
+def qv_scatter(valuex, valuey, data, title=None, xlabel=None, ylabel=None, stat=True):
+    if title == None:
+        title = f'{valuex} vs {valuey}'
+    if xlabel == None:
+        xlabel = valuex
+    if ylabel == None:
+        ylabel = valuey
+
+    plt.figure(figsize=(5,4))
+    sns.scatterplot(x=valuex, y=valuey, data=data).set(
+        title=title, xlabel=xlabel, ylabel=ylabel
+    )
+
+    if (data[valuex].isnull().any() | data[valuey].isnull().any()):
+            data = data.dropna()
+            print('Null values are dropped in statistical tests.')
+    
+    r_pearson, p_pearson = stats.pearsonr(data[valuex], data[valuey])
+    r_spearman, p_spearman = stats.spearmanr(data[valuex], data[valuey])
+    table = [['Pearson\'s r', r_pearson, p_pearson], ['Spearman\'s r', r_spearman, p_spearman]]
+    print( tabulate( table, headers=['Test', 'r', 'p'], floatfmt=['', '.4f', '.4f']))
 
 def qv_2cat():
     pass
