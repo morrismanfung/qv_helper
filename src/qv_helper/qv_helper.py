@@ -78,8 +78,61 @@ def qv_scatter(valuex, valuey, data, title=None, xlabel=None, ylabel=None, stat=
     table = [['Pearson\'s r', r_pearson, p_pearson], ['Spearman\'s r', r_spearman, p_spearman]]
     print( tabulate( table, headers=['Test', 'r', 'p'], floatfmt=['', '.4f', '.4f']))
 
-def qv_2cat():
-    pass
+def qv_2cat(groupx, groupy, data, title_heatmap=None, title_bar=None, xlabel=None, ylabel=None, stat=True, cmap='YlGn'):
+    if title_heatmap == None:
+        title_heatmap = f'{groupx} vs {groupy}'
+    if title_bar == None:
+        title_bar = f'% of {groupx} by {groupy}'
+    if xlabel == None:
+        xlabel = groupx
+    if ylabel == None:
+        ylabel = groupy
+
+    if (data[groupx].isnull().any() | data[groupy].isnull().any()):
+        data = data.dropna()
+        print('Null values are dropped in statistical tests.')
+
+    fix, axes = plt.subplots(1, 2, figsize=(10, 4), constrained_layout=True)
+
+    data['dummy']=0 # Creating a dummy column for counting
+    table_count = pd.pivot_table(data, index=groupy, columns=groupx, values='dummy', aggfunc='count').fillna(0)
+
+    sns.heatmap(table_count, cmap=cmap, ax=axes[0]).set(
+        title=title_heatmap, xlabel=xlabel, ylabel=ylabel
+    )
+
+    sums = table_count.sum( axis = 1)
+    row_sums = pd.DataFrame() # Creating a dummy data frame for division
+    for i in table_count.columns:
+        row_sums[i]=sums
+
+    table_prop = table_count.div(row_sums)
+
+    table_prop.plot(kind='bar', stacked=True, ax=axes[1])
+    plt.xticks(rotation=0)
+    plt.legend(title=xlabel, bbox_to_anchor=(1, 1))
+    plt.title(title_bar)
+    plt.xlabel(ylabel)
+    plt.ylabel('Cumalative %')
+
+    if stat == True:
+        if table_count.shape == (2,2):
+            chi_result = stats.chi2_contingency(table_count)
+            chi, p, df = chi_result.statistic, chi_result.pvalue, chi_result.dof
+            bar_result = stats.barnard_exact(table_count)
+            wald, bar_p = bar_result.statistic, bar_result.pvalue
+            fisher_result = stats.fisher_exact(table_count)
+            odds_ratio, fisher_p = fisher_result.statistic, fisher_result.pvalue
+
+            table = [['Chi-squared test', 'Chi-squared', chi, df, p],
+                    ['Barnard exact test', 'Wald statistic', wald, '--', bar_p],
+                    ['Fisher exact test', 'Prior odds raio', odds_ratio, '--', fisher_p]]
+            print(tabulate(table, headers=['Test', 'Test statistic', 'Value', 'df', 'p'], floatfmt=('', '', '.2f', '', '.4f')))
+        else:
+            chi_result = stats.chi2_contingency(table_count)
+            chi, p, df = chi_result.statistic, chi_result.pvalue, chi_result.dof
+            table = [['Chi-squared test', 'Chi-squared', chi, df, p]]
+            print(tabulate(table, headers=['Test', 'Test statistic', 'Value', 'df', 'p'], floatfmt=('', '', '.2f', '', '.4f')))
 
 def qv_count():
     pass
