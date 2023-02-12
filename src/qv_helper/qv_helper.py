@@ -32,7 +32,7 @@ def qv_groups(value, group, data, title=None, xlabel=None, ylabel=None, stat=Tru
     if n_group == 0:
         raise Exception('Pleaes use a data frame with data inside.')
     elif n_group == 1:
-        raise Exception('Please consider using rv_dist in the package when only 1 class is used.')
+        raise Exception('Please consider using qv_dist in the package when only 1 class is used.')
     elif stat == True:
         if n_group == 2:
             if np.var(data[value]) == 0:
