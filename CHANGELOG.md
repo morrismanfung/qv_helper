@@ -4,4 +4,4 @@
 
 ## v0.1.0 (10/02/2023)
 
-- First release of `rv_helper`!
+- First release of `qv_helper`!

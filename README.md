@@ -1,11 +1,11 @@
-# rv_helper
+# qv_helper
 
-A helper package for rapid visualization
+A helper package for Quick Visualization
 
 ## Installation
 
 ```bash
-$ pip install rv_helper
+$ pip install qv_helper
 ```
 
 ## Usage
@@ -18,8 +18,8 @@ Interested in contributing? Check out the contributing guidelines. Please note t
 
 ## License
 
-`rv_helper` was created by Morris Chan. It is licensed under the terms of the MIT license.
+`qv_helper` was created by Morris Chan. It is licensed under the terms of the MIT license.
 
 ## Credits
 
-`rv_helper` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).
+`qv_helper` was created with [`cookiecutter`](https://cookiecutter.readthedocs.io/en/latest/) and the `py-pkgs-cookiecutter` [template](https://github.com/py-pkgs/py-pkgs-cookiecutter).

@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "rv_helper"
+name = "qv_helper"
 version = "0.1.0"
-description = "A helper package for rapid visualization"
+description = "A helper package for quick visualization"
 authors = ["Morris Chan"]
 license = "MIT"
 readme = "README.md"
