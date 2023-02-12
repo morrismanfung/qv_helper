@@ -44,7 +44,6 @@ def qv_groups(value, group, data, title=None, xlabel=None, ylabel=None, stat=Tru
                 t_w, p_w = stats.ttest_ind(group_a[value], group_b[value], equal_var=False)
                 table = [['Equal var. assumed', t_eq, p_eq], ['Equal var. not assumed', t_w, p_w]]
                 print(tabulate(table, headers=['Test', 't', 'p'], floatfmt=('', '.2f', '.4f')))
-                print( table)
         elif n_group > 2:
             vectors = dict()
             for i in group_list:
@@ -148,10 +147,11 @@ def qv_count(value, data, title=None, label=None, stat=True):
     if data[value].isnull().any():
             print('Null values are dropped in the chart.')
     
-    counts = data[value].value_counts()
-    counts = np.array( [counts.index, counts]).T
-    nas = [['NA', data[value].isna().sum()]]
-    print( tabulate( np.concatenate((counts, nas)), headers=['Group', 'Count']))
+    if stat == True:
+        counts = data[value].value_counts()
+        counts = np.array( [counts.index, counts]).T
+        nas = [['NA', data[value].isna().sum()]]
+        print( tabulate( np.concatenate((counts, nas)), headers=['Group', 'Count']))
 
 def qv_dist(value, data, title=None, label=None, kde=True, bins='auto', hue=None, stat=True):
     if title == None:
